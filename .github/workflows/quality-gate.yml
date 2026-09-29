@@ -2,9 +2,9 @@ name: Quality Gate
 
 on:
   push:
-    branches: [develop]
+    branches: [main, develop]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
 
 permissions:
   contents: read
