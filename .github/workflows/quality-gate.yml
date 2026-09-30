@@ -35,3 +35,4 @@ jobs:
           grep -q 'manifest.webmanifest' index.html
           grep -q 'serviceWorker' app.js
           node tests/smoke.mjs
+          node tests/behavior.mjs
