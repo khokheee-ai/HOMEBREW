@@ -34,3 +34,4 @@ jobs:
           grep -q 'styles.css' index.html
           grep -q 'manifest.webmanifest' index.html
           grep -q 'serviceWorker' app.js
+          node tests/smoke.mjs
