@@ -9,7 +9,10 @@ must(app.includes("b.status='finished'"),'final step must create finished state'
 must(app.includes("S.activeId=null"),'finishing/archiving must clear active state');
 must(app.includes('function stabilityCheck(b)'), 'stability guard must exist');
 must(app.includes("stabilityStep=b.route==='easy'?5:15"),'both routes must gate stability');
-must(app.includes('function validBackup(d)'), 'backup validation must exist');
+must(app.includes('function normalizeBackup(d)'), 'backup normalization must exist');
+must(app.includes("completedSteps:Array.isArray")||app.includes("Array.isArray(raw.completedSteps)"),'backup import must normalize completedSteps');
+must(app.includes("raw.checks&&typeof raw.checks==='object'"),'backup import must normalize checks');
+must(sw.includes("homebrew-v6"),'service worker cache version must be bumped for this release');
 must(sw.includes("r.method!=='GET'"),'service worker must skip non-GET requests');
 must(sw.includes("u.origin!==self.location.origin"),'service worker must skip cross-origin requests');
 console.log('HOME BREW smoke assertions passed');
