@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+const app=fs.readFileSync('app.js','utf8');
+const html=fs.readFileSync('index.html','utf8');
+const sw=fs.readFileSync('sw.js','utf8');
+const must=(ok,msg)=>{if(!ok)throw new Error(msg)};
+must(html.includes('id="app"'),'index.html must expose #app');
+must(app.includes("step=\"'+numStep(name)+'\""),'numeric inputs must define decimal step');
+must(app.includes("b.status='finished'"),'final step must create finished state');
+must(app.includes("S.activeId=null"),'finishing/archiving must clear active state');
+must(app.includes('function stabilityCheck(b)'), 'stability guard must exist');
+must(app.includes("stabilityStep=b.route==='easy'?5:15"),'both routes must gate stability');
+must(app.includes('function validBackup(d)'), 'backup validation must exist');
+must(sw.includes("r.method!=='GET'"),'service worker must skip non-GET requests');
+must(sw.includes("u.origin!==self.location.origin"),'service worker must skip cross-origin requests');
+console.log('HOME BREW smoke assertions passed');
