@@ -30,7 +30,7 @@ const completionBlock=slice('window.completeStep','function logView');
 function completionCase(route,step,readings){
   let saved=0,rendered=0; const b={id:'b',route,currentStep:step,status:'active',completedSteps:[],checks:{},readings};
   const fakeWindow={};
-  const extra="const window=globalThis.window;let S=globalThis.S,view='brew',selectedBatchId=null;const active=()=>S.batches.find(b=>b.id===S.activeId&&!['archived','finished'].includes(b.status));const save=()=>{globalThis.saved++};const render=()=>{globalThis.rendered++};"+stabilityBlock;
+  const extra="const window=globalThis.window;let S=globalThis.S,view='brew',selectedBatchId=null;const active=()=>S.batches.find(b=>b.id===S.activeId&&!['archived','finished'].includes(b.status));const readings=b=>[...(b.readings||[])].sort((a,z)=>new Date(a.ts)-new Date(z.ts));const sgread=b=>readings(b).filter(r=>Number.isFinite(r.sg));const save=()=>{globalThis.saved++};const render=()=>{globalThis.rendered++};"+stabilityBlock;
   const c={window:fakeWindow,S:{activeId:'b',batches:[b]},saved,rendered,console,Date,Math,Number,Array,Object,Set,alert:()=>{},confirm:()=>true};
   vm.createContext(c);vm.runInContext(extra+completionBlock,c);c.window.completeStep();return {b:c.S.batches[0],S:c.S};
 }
